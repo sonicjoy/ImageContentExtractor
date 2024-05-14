@@ -1,0 +1,52 @@
+﻿@page "/"
+@using System.Text.Json
+@rendermode InteractiveServer
+
+@inject UploadFileApiClient UploadFileApi
+
+<PageTitle>Home</PageTitle>
+
+<h1>Troubleshooting Extractor</h1>
+
+<p>
+	Upload the manual here
+</p>
+
+<InputFile OnChange="UploadFile" />
+
+<div>
+
+	@if (_isLoading)
+	{
+		<span>Uploading...</span>
+	}
+	else
+	{
+		<pre>
+			@(JsonSerializer.Serialize(_troubleshooting, new JsonSerializerOptions() { WriteIndented = true }))
+		</pre>
+	}
+</div>
+
+@code {
+
+	private bool _isLoading;
+	Troubleshooting? _troubleshooting;
+
+	private async Task UploadFile(InputFileChangeEventArgs args)
+	{
+		_isLoading = true;
+
+		var file = args.File;
+		try
+		{
+			_troubleshooting = await UploadFileApi.UploadFile(file);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"File: {file.Name} Error: {ex.Message}");
+		}
+
+		_isLoading = false;
+	}
+}
