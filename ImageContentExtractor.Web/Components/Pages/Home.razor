@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using System.Text.Json
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation
 @rendermode InteractiveServer
 
 @inject UploadFileApiClient UploadFileApi
@@ -20,27 +22,51 @@
 	{
 		<span>Uploading...</span>
 	}
-	else
+	else if (_troubleshooting is not null)
 	{
 		<pre>
 			@(JsonSerializer.Serialize(_troubleshooting, new JsonSerializerOptions() { WriteIndented = true }))
 		</pre>
 	}
+	else
+	{
+		<span>Processing...</span>
+	}
 </div>
 
 @code {
-
+	private HubConnection? _hubConnection;
 	private bool _isLoading;
 	Troubleshooting? _troubleshooting;
+
+	protected override async Task OnInitializedAsync()
+	{
+		_hubConnection = new HubConnectionBuilder()
+			.WithUrl(new Uri("https://localhost:7487/messagehub")) //todo: get relative path to the api server
+			.WithAutomaticReconnect()
+			.Build();
+
+		_hubConnection.On<string>("ReceiveMessage", (message) =>
+		{
+			_troubleshooting = JsonSerializer.Deserialize<Troubleshooting>(message, new JsonSerializerOptions
+			{
+				PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+			});
+			InvokeAsync(StateHasChanged);
+		});
+
+		await _hubConnection.StartAsync();
+	}
 
 	private async Task UploadFile(InputFileChangeEventArgs args)
 	{
 		_isLoading = true;
+		_troubleshooting = null;
 
 		var file = args.File;
 		try
 		{
-			_troubleshooting = await UploadFileApi.UploadFile(file);
+			await UploadFileApi.UploadFile(file);
 		}
 		catch (Exception ex)
 		{

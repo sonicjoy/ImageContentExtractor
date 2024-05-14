@@ -8,7 +8,7 @@ public class UploadFileApiClient(HttpClient httpClient)
 {
 	private const long MaxFileSize = 1024 * 1024 * 20;
 
-	public async Task<Troubleshooting> UploadFile(IBrowserFile file, CancellationToken cancellationToken = default)
+	public async Task<HttpResponseMessage> UploadFile(IBrowserFile file, CancellationToken cancellationToken = default)
     {
 	    using var content = new MultipartFormDataContent();
 
@@ -27,21 +27,7 @@ public class UploadFileApiClient(HttpClient httpClient)
 	    // Check if the request was successful
 	    if (response.IsSuccessStatusCode)
 	    {
-		    try
-		    {
-			    // Read the response content
-				var jsonContent = await response.Content.ReadFromJsonAsync<Troubleshooting>(
-					new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower },
-					cancellationToken: cancellationToken);
-
-				return jsonContent;
-		    }
-		    catch (JsonException ex)
-		    {
-				Console.WriteLine(ex);
-				throw;
-		    }
-
+		    return response;
 	    }
 
 	    // If the request failed, throw an exception or handle the error

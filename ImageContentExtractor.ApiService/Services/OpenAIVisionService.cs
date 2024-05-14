@@ -51,10 +51,8 @@ public class OpenAIVisionService
 
     }
 
-    public async Task<string> ExtractTextFromImageAsync(IFormFile file)
+    public async Task<string> ExtractTextFromImageAsync(string[] base64Strings)
     {
-        var base64Strings = await GetBase64StringFromPdfFile(file);
-
         var content = new List<OpenAIContent>
         {
 	        new("text")
@@ -98,7 +96,7 @@ public class OpenAIVisionService
 
     }
 
-    private static async Task<string[]> GetBase64StringFromPdfFile(IFormFile file)
+    public static async Task<string[]> GetBase64StringFromPdfFile(IFormFile file)
 	{
 		try
 		{

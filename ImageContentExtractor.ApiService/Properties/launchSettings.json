@@ -15,7 +15,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "upload-file",
       "applicationUrl": "https://localhost:7487;http://localhost:5551",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

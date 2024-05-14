@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ImageContentExtractor.ApiService\ImageContentExtractor.ApiService.csproj" />
     <ProjectReference Include="..\ImageContentExtractor.ServiceDefaults\ImageContentExtractor.ServiceDefaults.csproj" />
   </ItemGroup>
 
