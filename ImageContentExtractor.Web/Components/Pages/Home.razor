@@ -22,7 +22,7 @@
 
 	@if (_isLoading)
 	{
-		<span>Uploading...</span>
+		<span>@_status</span>
 	}
 	else if (_troubleshooting is not null)
 	{
@@ -32,7 +32,7 @@
 	}
 	else
 	{
-		<span>Processing...</span>
+		<span>@_status</span>
 	}
 </div>
 
@@ -40,11 +40,12 @@
 	private HubConnection? _hubConnection;
 	private bool _isLoading;
 	Troubleshooting? _troubleshooting;
+	private string? _status;
 
 	protected override async Task OnInitializedAsync()
 	{
 		_hubConnection = new HubConnectionBuilder()
-			.WithUrl("https://localhost:7487/messagehub") //todo: get relative path to the api server
+			.WithUrl(new Uri("https://localhost:7487/messagehub")) //todo: get relative path to the api server
 			.WithAutomaticReconnect()
 			.Build();
 
@@ -54,6 +55,7 @@
 			{
 				PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
 			});
+			_status = string.Empty;
 			InvokeAsync(StateHasChanged);
 		});
 
@@ -63,6 +65,7 @@
 	private async Task UploadFile(InputFileChangeEventArgs args)
 	{
 		_isLoading = true;
+		_status = "Uploading...";
 		_troubleshooting = null;
 
 		var file = args.File;
@@ -76,5 +79,6 @@
 		}
 
 		_isLoading = false;
+		_status = "Processing...";
 	}
 }
