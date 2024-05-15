@@ -14,6 +14,7 @@ Before running the solution, make sure you have set your OpenAI API key and orga
 ```
 ## How to Run
 Please refer to the official page: [setup and run Aspire solution](https://learn.microsoft.com/en-us/dotnet/aspire/fundamentals/setup-tooling?tabs=dotnet-cli%2Cwindows#net-aspire-dashboard)
+
 To run the solution, use the following dotnet CLI command:
 
 ```.NET CLI dotnet run --project ImageContentExtractor.AppHost ```
