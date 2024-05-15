@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using System.Text.Json
+@using Aspire.Hosting
+@using Aspire.Hosting.ApplicationModel
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
@@ -42,7 +44,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		_hubConnection = new HubConnectionBuilder()
-			.WithUrl(new Uri("https://localhost:7487/messagehub")) //todo: get relative path to the api server
+			.WithUrl("https://localhost:7487/messagehub") //todo: get relative path to the api server
 			.WithAutomaticReconnect()
 			.Build();
 

@@ -80,8 +80,7 @@ app.MapPost("/upload-file", async (IFormFile file) =>
 		throw;
 	}
 
-
-	return Results.Ok();
+	return Results.Ok("File received.");
 
 }).DisableAntiforgery();
 

@@ -1,3 +1,4 @@
+using ImageContentExtractor.ApiService.Hubs;
 using ImageContentExtractor.ServiceDefaults;
 using ImageContentExtractor.Web;
 using ImageContentExtractor.Web.Components;

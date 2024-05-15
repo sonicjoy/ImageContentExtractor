@@ -16,8 +16,6 @@ public class OpenAIVisionService
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
 	};
 
-    
-
     private const string Prompt = "From the user manual, please locate the troubleshooting section and return the " +
                                   "section as an deserialisable json object in the following format:\r\n" +
                                   "{\r\n" +
