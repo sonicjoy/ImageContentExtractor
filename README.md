@@ -1,4 +1,4 @@
-# Image Content Extractor#
+# Image Content Extractor
 
 ## Description
 ImageContentExtractor is an Aspire.Net solution written in C# .NET that allows users to upload a manual in PDF format and extract the "troubleshooting" section in JSON format. 
