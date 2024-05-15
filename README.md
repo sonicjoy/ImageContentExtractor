@@ -17,6 +17,9 @@ Please refer to the official page: [setup and run Aspire solution](https://learn
 
 To run the solution, use the following dotnet CLI command:
 
-```.NET CLI dotnet run --project ImageContentExtractor.AppHost ```
+`.NET CLI`
+``` 
+dotnet run --project ImageContentExtractor.AppHost
+```
 
 Once the dashboard opens in a browser, click on the endpoint of the `webfrontend` project to open the home page where you can upload a PDF file and extract the "troubleshooting" section in JSON format.
