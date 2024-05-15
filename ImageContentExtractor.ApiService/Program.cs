@@ -54,7 +54,7 @@ app.MapPost("/upload-file", async (IFormFile file) =>
 
 		var openAiOrgId = builder.Configuration["OpenAIServiceOptions:OrganizationId"];
 
-		Task.Run(async () =>
+		_ = Task.Factory.StartNew(async () =>
 		{
 			try
 			{
@@ -71,7 +71,7 @@ app.MapPost("/upload-file", async (IFormFile file) =>
 				Console.WriteLine(ex);
 				throw;
 			}
-		});
+		}, TaskCreationOptions.LongRunning);
 
 	}
 	catch(Exception ex)
